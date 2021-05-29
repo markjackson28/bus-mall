@@ -27,6 +27,7 @@ section img {
   height: 300px;
   margin: 50px;
   border-radius: 10px;
+  border: 2px solid black;
 }
 
 main div {
@@ -35,6 +36,7 @@ main div {
   padding: 10px;
   margin: auto;
   margin-top: 25px;
+  margin-bottom: 25px;
   border-radius: 10px;
 }
 
@@ -42,3 +44,13 @@ main div:hover, section img:hover {
   cursor: pointer;
 }
 
+ul {
+  width: max-content;
+  margin: auto;
+}
+
+ul li {
+  font-size: 1.2em;
+  text-align: center;
+  line-height: 20px;
+}

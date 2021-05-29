@@ -3,8 +3,7 @@
 // Global Variables
 let allProducts = [];
 let clicks = 0;
-// remember to change back to 25
-let clicksAllowed = 20;
+let clicksAllowed = 25;
 
 let myContainer = document.querySelector('section');
 let myButton = document.querySelector('div');
