@@ -1,18 +1,17 @@
 'use strict';
 
-// console.log('hello world');
-
 // Global Variables
 let allProducts = [];
 let clicks = 0;
 // remember to change back to 25
-let clicksAllowed = 6;
+let clicksAllowed = 20;
 
 let myContainer = document.querySelector('section');
 let myButton = document.querySelector('div');
 let imageOne = document.querySelector('section img:first-child');
 let imageTwo = document.querySelector('section img:nth-child(2)');
 let imageThree = document.querySelector('section img:last-child');
+let renderListArray = [];
 
 // constructor
 function Item(name, fileExtension = 'jpg') {
@@ -49,12 +48,17 @@ function selectRandomProducttIndex() {
 }
 
 function renderRandomProducts() {
-  let productOne = selectRandomProducttIndex();
-  let productTwo = selectRandomProducttIndex();
-  let productThree = selectRandomProducttIndex();
-  while (productOne === productTwo) {
-    productTwo = selectRandomProducttIndex();
+  while (renderListArray.length < 3) {
+    let uniqueProduct = selectRandomProducttIndex();
+    // while the unique product is not included in the render list array, push the unique product into the array
+    while (!renderListArray.includes(uniqueProduct)) {
+      renderListArray.push(uniqueProduct);
+    }
   }
+
+  let productOne = renderListArray.pop();
+  let productTwo = renderListArray.pop();
+  let productThree = renderListArray.pop();
 
   imageOne.src = allProducts[productOne].src;
   imageOne.alt = allProducts[productOne].name;
