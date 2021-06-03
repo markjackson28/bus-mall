@@ -3,14 +3,16 @@
 // Global Variables
 let allProducts = [];
 let clicks = 0;
-let clicksAllowed = 25;
+// change back to 25
+let clicksAllowed = 12;
+let renderListArray = [];
 
+// DOM entrance
 let myContainer = document.querySelector('section');
 let myButton = document.querySelector('div');
 let imageOne = document.querySelector('section img:first-child');
 let imageTwo = document.querySelector('section img:nth-child(2)');
 let imageThree = document.querySelector('section img:last-child');
-let renderListArray = [];
 
 // constructor
 function Item(name, fileExtension = 'jpg') {
@@ -47,11 +49,11 @@ function selectRandomProducttIndex() {
 }
 
 function renderRandomProducts() {
-  while (renderListArray.length < 3) {
+  while (renderListArray.length < 6) {
     let uniqueProduct = selectRandomProducttIndex();
     // while the unique product is not included in the render list array, push the unique product into the array
-    while (!renderListArray.includes(uniqueProduct)) {
-      renderListArray.push(uniqueProduct);
+    if (!renderListArray.includes(uniqueProduct)) {
+      renderListArray.unshift(uniqueProduct);
     }
   }
 
@@ -107,7 +109,48 @@ function handleButtonClick(event) { //eslint-disable-line
   }
 }
 
+function renderChart() {
+  let ctx = document.getElementById('myChart').getContext('2d');
+  let myChart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+      datasets: [{
+        label: '# of Votes',
+        data: [12, 19, 3, 5, 2, 3],
+        backgroundColor: [
+          'rgba(255, 99, 132, 0.2)',
+          'rgba(54, 162, 235, 0.2)',
+          'rgba(255, 206, 86, 0.2)',
+          'rgba(75, 192, 192, 0.2)',
+          'rgba(153, 102, 255, 0.2)',
+          'rgba(255, 159, 64, 0.2)'
+        ],
+        borderColor: [
+          'rgba(255, 99, 132, 1)',
+          'rgba(54, 162, 235, 1)',
+          'rgba(255, 206, 86, 1)',
+          'rgba(75, 192, 192, 1)',
+          'rgba(153, 102, 255, 1)',
+          'rgba(255, 159, 64, 1)'
+        ],
+        borderWidth: 1
+      }]
+    },
+    options: {
+      scales: {
+        y: {
+          beginAtZero: true
+        }
+      }
+    }
+  });
+}
+
+renderChart();
+
 renderRandomProducts();
 
 myContainer.addEventListener('click', handleProductClick);
 myButton.addEventListener('click', handleButtonClick);
+
