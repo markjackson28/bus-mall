@@ -91,6 +91,7 @@ function handleProductClick(event) {
 
   if (clicks === clicksAllowed) {
     myContainer.removeEventListener('click', handleProductClick);
+    renderChart();
   }
 }
 
@@ -110,14 +111,49 @@ function handleButtonClick(event) { //eslint-disable-line
 }
 
 function renderChart() {
+  let clicksArray = [];
+  let viewsArray = [];
+  let namesArray = [];
+
+  for (let i = 0; i < allProducts.length; i++){
+    clicksArray.push(allProducts[i].clicks);
+    viewsArray.push(allProducts[i].views);
+    namesArray.push(allProducts[i].name);
+  }
+ 
+  console.log(`${clicksArray}
+  ${viewsArray}
+  ${namesArray}`);
+
   let ctx = document.getElementById('myChart').getContext('2d');
   let myChart = new Chart(ctx, {
     type: 'bar',
     data: {
-      labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+      labels: namesArray,
       datasets: [{
-        label: '# of Votes',
-        data: [12, 19, 3, 5, 2, 3],
+        label: '# of Clicks',
+        data: clicksArray,
+        backgroundColor: [
+          'rgba(255, 99, 132, 0.2)',
+          'rgba(54, 162, 235, 0.2)',
+          'rgba(255, 206, 86, 0.2)',
+          'rgba(75, 192, 192, 0.2)',
+          'rgba(153, 102, 255, 0.2)',
+          'rgba(255, 159, 64, 0.2)'
+        ],
+        borderColor: [
+          'rgba(255, 99, 132, 1)',
+          'rgba(54, 162, 235, 1)',
+          'rgba(255, 206, 86, 1)',
+          'rgba(75, 192, 192, 1)',
+          'rgba(153, 102, 255, 1)',
+          'rgba(255, 159, 64, 1)'
+        ],
+        borderWidth: 1
+      },
+      {
+        label: '# of Views',
+        data: viewsArray,
         backgroundColor: [
           'rgba(255, 99, 132, 0.2)',
           'rgba(54, 162, 235, 0.2)',
@@ -146,8 +182,6 @@ function renderChart() {
     }
   });
 }
-
-renderChart();
 
 renderRandomProducts();
 
