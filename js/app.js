@@ -120,10 +120,6 @@ function renderChart() {
     viewsArray.push(allProducts[i].views);
     namesArray.push(allProducts[i].name);
   }
- 
-  console.log(`${clicksArray}
-  ${viewsArray}
-  ${namesArray}`);
 
   let ctx = document.getElementById('myChart').getContext('2d');
   let myChart = new Chart(ctx, {
