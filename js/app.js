@@ -4,15 +4,16 @@
 let allProducts = [];
 let clicks = 0;
 let clicksAllowed = 25;
+let renderListArray = [];
 
+// DOM Entrance
 let myContainer = document.querySelector('section');
 let myButton = document.querySelector('div');
 let imageOne = document.querySelector('section img:first-child');
 let imageTwo = document.querySelector('section img:nth-child(2)');
 let imageThree = document.querySelector('section img:last-child');
-let renderListArray = [];
 
-// constructor
+// Constructor
 function Item(name, fileExtension = 'jpg') {
   this.name = name;
   this.src = `img/${name}.${fileExtension}`;
@@ -21,6 +22,7 @@ function Item(name, fileExtension = 'jpg') {
   allProducts.push(this);
 }
 
+// Instances of Items
 new Item('bag');
 new Item('banana');
 new Item('bathroom');
@@ -41,17 +43,17 @@ new Item('unicorn');
 new Item('water-can');
 new Item('wine-glass');
 
-
+//Random Index Generator
 function selectRandomProducttIndex() {
   return Math.floor(Math.random() * allProducts.length);
 }
 
+// Random Product Generator/Display
 function renderRandomProducts() {
-  while (renderListArray.length < 3) {
+  while (renderListArray.length < 6) {
     let uniqueProduct = selectRandomProducttIndex();
-    // while the unique product is not included in the render list array, push the unique product into the array
-    while (!renderListArray.includes(uniqueProduct)) {
-      renderListArray.push(uniqueProduct);
+    if (!renderListArray.includes(uniqueProduct)) {
+      renderListArray.unshift(uniqueProduct);
     }
   }
 
@@ -72,6 +74,7 @@ function renderRandomProducts() {
   allProducts[productThree].views++;
 }
 
+// Product Clicker
 function handleProductClick(event) {
   if (event.target === myContainer) {
     alert('Please click on an IMAGE to continue.');
@@ -89,25 +92,62 @@ function handleProductClick(event) {
 
   if (clicks === clicksAllowed) {
     myContainer.removeEventListener('click', handleProductClick);
+    document.querySelector('#chart').style.display = 'block';
+    renderChart();
   }
 }
 
-function renderResults() {
-  let ul = document.querySelector('ul');
+// Chart Render
+function renderChart() {
+  let clicksArray = [];
+  let viewsArray = [];
+  let namesArray = [];
+
   for (let i = 0; i < allProducts.length; i++) {
-    let li = document.createElement('li');
-    li.textContent = `${allProducts[i].name} had ${allProducts[i].views} views and was clicked ${allProducts[i].clicks} times.`;
-    ul.appendChild(li);
+    clicksArray.push(allProducts[i].clicks);
+    viewsArray.push(allProducts[i].views);
+    namesArray.push(allProducts[i].name);
   }
-}
 
-function handleButtonClick(event) { //eslint-disable-line
-  if (clicks === clicksAllowed) {
-    renderResults();
-  }
+  let ctx = document.getElementById('myChart').getContext('2d');
+  let myChart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: namesArray,
+      datasets: [{
+        label: '# of Clicks',
+        data: clicksArray,
+        backgroundColor: [
+          'rgba(255, 99, 132, 0.2)'
+        ],
+        borderColor: [
+          'rgba(255, 99, 132, 1)'
+        ],
+        borderWidth: 1
+      },
+      {
+        label: '# of Views',
+        data: viewsArray,
+        backgroundColor: [
+          'rgba(54, 162, 235, 0.2)'
+        ],
+        borderColor: [
+          'rgba(54, 162, 235, 1)'
+        ],
+        borderWidth: 1
+      }]
+    },
+    options: {
+      scales: {
+        y: {
+          beginAtZero: true
+        }
+      }
+    }
+  });
 }
 
 renderRandomProducts();
 
 myContainer.addEventListener('click', handleProductClick);
-myButton.addEventListener('click', handleButtonClick);
+

@@ -31,26 +31,16 @@ section img {
 }
 
 main div {
-  background-color: yellow;
+  background-color: white;
   width: max-content;
   padding: 10px;
   margin: auto;
   margin-top: 25px;
   margin-bottom: 25px;
   border-radius: 10px;
+  display: none;
 }
 
 main div:hover, section img:hover {
   cursor: pointer;
-}
-
-ul {
-  width: max-content;
-  margin: auto;
-}
-
-ul li {
-  font-size: 1.2em;
-  text-align: center;
-  line-height: 20px;
 }
