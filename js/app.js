@@ -5,6 +5,7 @@ let allProducts = [];
 let clicks = 0;
 let clicksAllowed = 25;
 let renderListArray = [];
+let retrievedProducts = localStorage.getItem('products');
 
 // DOM Entrance
 let myContainer = document.querySelector('section');
@@ -22,26 +23,32 @@ function Item(name, fileExtension = 'jpg') {
   allProducts.push(this);
 }
 
-// Instances of Items
-new Item('bag');
-new Item('banana');
-new Item('bathroom');
-new Item('boots');
-new Item('breakfast');
-new Item('bubblegum');
-new Item('chair');
-new Item('cthulhu')
-new Item('dog-duck');
-new Item('dragon');
-new Item('pen');
-new Item('pet-sweep');
-new Item('scissors');
-new Item('shark');
-new Item('sweep', 'png');
-new Item('tauntaun');
-new Item('unicorn');
-new Item('water-can');
-new Item('wine-glass');
+if (retrievedProducts) {
+  let parsedProducts = JSON.parse(retrievedProducts);
+  allProducts = parsedProducts;
+} else {
+  // Instances of Items
+  new Item('bag');
+  new Item('banana');
+  new Item('bathroom');
+  new Item('boots');
+  new Item('breakfast');
+  new Item('bubblegum');
+  new Item('chair');
+  new Item('cthulhu')
+  new Item('dog-duck');
+  new Item('dragon');
+  new Item('pen');
+  new Item('pet-sweep');
+  new Item('scissors');
+  new Item('shark');
+  new Item('sweep', 'png');
+  new Item('tauntaun');
+  new Item('unicorn');
+  new Item('water-can');
+  new Item('wine-glass');
+}
+
 
 //Random Index Generator
 function selectRandomProducttIndex() {
@@ -93,6 +100,10 @@ function handleProductClick(event) {
   if (clicks === clicksAllowed) {
     myContainer.removeEventListener('click', handleProductClick);
     document.querySelector('#chart').style.display = 'block';
+
+    let stringfiedProducts = JSON.stringify(allProducts);
+    localStorage.setItem('products', stringfiedProducts);
+
     renderChart();
   }
 }
