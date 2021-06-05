@@ -5,6 +5,7 @@ let allProducts = [];
 let clicks = 0;
 let clicksAllowed = 25;
 let renderListArray = [];
+
 let retrievedProducts = localStorage.getItem('products');
 
 // DOM Entrance
@@ -23,6 +24,7 @@ function Item(name, fileExtension = 'jpg') {
   allProducts.push(this);
 }
 
+// Local Storage
 if (retrievedProducts) {
   let parsedProducts = JSON.parse(retrievedProducts);
   allProducts = parsedProducts;
