@@ -163,4 +163,3 @@ function renderChart() {
 renderRandomProducts();
 
 myContainer.addEventListener('click', handleProductClick);
-
